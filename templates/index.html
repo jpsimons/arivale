@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Scheduler</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+  </head>
+  <body>
+    <h2>Welcome, {{ client_name }}. Here is your coach's schedule for {{ date_formatted }}.</h2>
+    <p>
+      <a href="/?date={{prev}}">&#x25c0; Yesterday</a> |
+      <a href="/?date={{next}}">Tomorrow &#x25b6;</a> |
+      <a href="/">Today</a>
+    </p>
+
+    <div class="layout">
+      <div class="left">
+        <div class="calendar-day">
+            {% for hour in range(8, 20) %}
+              <div class="hour-slot">
+                <label>{{ hour | hour_formatted | lower }}</label>
+                <div class="box"></div>
+              </div>
+            {% endfor %}
+
+            {% for block in coach_availability %}
+              <div class="available" style="top: {{(block.start_hour * 60 + block.start_minute - (8*60)) / 1.5}}px; height: {{block.duration_minutes / 1.5}}px">
+                Available.
+              </div>
+            {% endfor %}
+
+            {% for block in coach_appointments %}
+              <div class="appointment {{'by-you' if block.client_id == client_id}}"
+                  style="top: {{(block.start_hour * 60 + block.start_minute - (8*60)) / 1.5}}px; height: {{block.duration_minutes / 1.5}}px">
+                Scheduled <span class="by-you-note">(by you)</span>.
+              </div>
+            {% endfor %}
+        </div>
+      </div>
+      <div class="right">
+        <h3>Schedule an appointment</h3>
+        <p><i>(Click the calendar on the left to easily select a time)</i></p>
+        <form id="time-selector" action="/schedule" method="POST">
+          <input type="hidden" name="date" value="{{date}}">
+          <select name="hour">
+            <option></option>
+            {% for hour in range(1,13) %}
+            <option value="{{hour}}">{{hour}}</option>
+            {% endfor %}
+          </select> :
+          <select name="minute">
+            <option></option>
+            <option value="0">00</option>
+            <option value="15">15</option>
+            <option value="30">30</option>
+            <option value="45">45</option>
+          </select>
+          <select name="ampm">
+            <option></option>
+            <option value="am">am</option>
+            <option value="pm">pm</option>
+          </select>
+          <br><br>
+          <input type="submit" value="Schedule it!" disabled>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      availability = {{coach_availability|safe}};
+      appointments = {{coach_appointments|safe}};
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/static/calendar.js"></script>
+  </body>
+</html>

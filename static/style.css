@@ -1,0 +1,96 @@
+body {
+  font: 15px Arial, sans-serif;
+  color: #333;
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: normal;
+}
+
+.layout > div {
+  display: inline-block;
+  vertical-align: top;
+  padding-right: 30px;
+}
+
+.calendar-day {
+  position: relative;
+}
+
+.hour-slot {
+  margin-top: -1px;
+  height: 41px;
+  position: relative;
+}
+
+.hour-slot label {
+  width: 80px;
+  text-align: right;
+  float: left;
+  margin-top: 3px;
+}
+
+.hour-slot .box {
+  width: 300px;
+  border: 1px dashed #ccc;
+  vertical-align: top;
+  height: 39px;
+  margin-left: 100px;
+}
+
+.available {
+  box-sizing: border-box;
+  position: absolute;
+  margin-top: 1px;
+  min-height: 40px;
+  left: 101px;
+  width: 300px;
+  background-color: rgba(255, 255, 128, 0.3);
+  padding: 5px;
+  font-style: italic;
+  font-size: 13px;
+  color: #993;
+}
+
+.appointment {
+  box-sizing: border-box;
+  position: absolute;
+  margin-top: 1px;
+  min-height: 40px;
+  left: 180px;
+  width: 220px;
+  background-color: #a792bc;
+  border: 1px solid #634d79;
+  border-radius: 3px;
+  padding: 5px;
+  font-style: italic;
+  font-size: 13px;
+  color: #634d79;
+}
+
+.appointment .by-you-note {
+  display: none;
+}
+
+.appointment.by-you {
+  background-color: #d1c4df;
+  border-width: 3px;
+}
+
+.appointment.by-you .by-you-note {
+  display: inline;
+}
+
+#time-selector input[type=submit] {
+  border-style: none;
+  border-radius: 2px;
+  padding: 4px 12px;
+  font-size: 20px;
+  background-color: #54a6d5;
+  margin-top: 20px;
+}
+
+#time-selector input[type=submit][disabled] {
+  border-color: transparent;
+  background-color: #ddd;
+}
